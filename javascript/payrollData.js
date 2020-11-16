@@ -29,6 +29,7 @@ const save = () => {
     let employeeData;
     try{
         employeeData = createEmployee();
+        storeEmployee(employeeData);
     }catch(e){
         return;
     }
@@ -64,3 +65,18 @@ const getSelectedValues = (propertyValue) => {
     });
     return selectEmployees;
 }
+
+function storeEmployee(employeePayrollData){
+    let employeeList = JSON.parse(localStorage.getItem("Employee List: "));
+
+    if(employeeList != undefined){
+        employeeList.push(EmployeeData);
+    }
+    else{
+        employeeList = [employeeData];
+    }
+
+    alert(employeeList.toString());
+    localStorage.setItem("Employee List: ",JSON.stringify(employeeList));
+}
+
