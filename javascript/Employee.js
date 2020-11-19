@@ -1,10 +1,5 @@
 class Employee{
 
-    id;
-    name;
-    profilePic;
-    gender;
-
     get id()
     {
         return this._id;
@@ -12,11 +7,7 @@ class Employee{
 
     set id(id)
     {
-        let idRegex = RegExp('[0-9]{1,}');
-        if(idRegex.test(id))
         this._id = id;
-        else
-        throw 'ID incorrect';
     }
 
     get name()
@@ -26,7 +17,7 @@ class Employee{
 
     set name(name)
     {
-        let nameRegex = RegExp('^[A-Z]{1}[a-zA-Z\\s]{2,}$');
+        let nameRegex = RegExp("^[A-Z]{1}[a-z]{2,}([ ][A-Z]{1}[a-z]{2,})?$");
         if(nameRegex.test(name))
         this._name = name;
         else 
@@ -53,14 +44,17 @@ class Employee{
         this._gender = gender;
     }
 
-    get department()
+    get departments()
     {
         return this._department;
     }
 
-    set department(department)
-    {
-        this._department = department;
+    set departments(departments) {
+        if (departments.length != 0) {
+            this._departments = departments;
+        } 
+        else 
+        throw "No Department Entered!";
     }
 
     get salary()
@@ -90,8 +84,8 @@ class Employee{
 
     set startDate(startDate)
     {
-        let date = new Date();
-        if(startDate<=date)
+        let today = new Date();
+        if(startDate<=today)
         {
         this._startDate = startDate;
         }
@@ -103,9 +97,9 @@ class Employee{
     {
         const dateFormat = {year:'numeric', month:'long', day:'numeric'};
         const date = (this.startDate === undefined) ? "undefined" :
-                     this.startDate.toLocaleDateString("en-US",dateFormat);
-        return "Id = "+this.id+", Name = "+this.name+", Gender = "+this.gender+", ProfilePic = "+this.profilePic+", Department = "+this.department+", Salary = "+this.salary+
-                ", StartDate = "+date+", Note = "+this.note;
+                      this.startDate.toLocaleDateString("en-US",dateFormat);
+        return "[ id: " + this.id + ", name: " + this.name + ", gender: " + this.gender + ", profilePicture: " + this._profilePicture +
+               ", salary: " + this.salary + ", startDate: " + date + ", departments: " + this.departments + ", note: " + this._note + " ]" + "\n";
     }
 
 }

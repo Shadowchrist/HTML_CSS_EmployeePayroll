@@ -166,6 +166,20 @@ select{
     text-align: center;
 }
 
+error-output {
+    margin-left: 2px;
+    font-size: 14px;
+    font-style: italic;
+    color: red;
+}
+
+valid-message {
+    font-size: 14px;
+    color: green;
+    margin-left: 4px;
+    font-weight: bold;
+}
+
 @media only screen and (max-width: 960px){
     .cancelButton{
         margin-left: 0px;
