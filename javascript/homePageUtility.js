@@ -17,24 +17,24 @@ const createInnerHtml = () => {
         "<th>Gender</th>" +
         "<th>Department</th>" +
         "<th>Salary</th>" +
-        "<th>Start Date</th>" +
+        "<th>Start Date\nMM/DD/YYYY() </th>" +
         "<th>Actions</th>";
     let innerHtml = `${headerHtml}`;
     if (employeeList.length == 0) {
         return;
     }
-    for (let employeeData of employeeList) {
+    for (let employee of employeeList) {
         innerHtml = `${innerHtml}
         <tr>
-            <td><img class="profile" alt="" src="${employeeData._profilePic}"></td>
-            <td>${employeeData._name}</td>
-            <td>${employeeData._gender}</td>
-            <td>${getDepartmentHtml(employeeData._departments)}</td>
-            <td>${employeeData._salary}</td>
-            <td>${dateString(employeeData._startDate)}</td>
+            <td><img class="profile" alt="" src="${employee._profilePic}"></td>
+            <td>${employee._name}</td>
+            <td>${employee._gender}</td>
+            <td>${getDepartmentHtml(employee._departments)}</td>
+            <td>${employee._salary}</td>
+            <td>${dateString(employee._startDate)}</td>
             <td>
-                <img id="${employeeData._id}" onclick="remove(this)" alt="delete" src="../assets/icons/delete-black-18dp.svg">
-                <img id="${employeeData._id}" onclick="update(this)" alt="edit" src="../assets/icons/create-black-18dp.svg">
+                <img id="${employee._id}" onclick="remove(this)" alt="delete" src="../assets/icons/delete-black-18dp.svg">
+                <img id="${employee._id}" onclick="update(this)" alt="edit" src="../assets/icons/create-black-18dp.svg">
             </td>
         </tr>
         `;
@@ -50,12 +50,27 @@ const getDepartmentHtml = (departments) => {
     return departmentHtml;
 };
 
+const remove = (temp) => {
+    let employeeData = employeeList.find(employee => employee._id == temp._id);
+    if (!employeeData) {
+      return;
+    }
+    let index = employeeList
+                .map(employee => employee._id)
+                .indexOf(employeeData._id);
+    employeeList.splice(index, 1);
+    localStorage.setItem("Employee List: ", JSON.stringify(employeeList));
+    document.querySelector(".emp-count").textContent = employeeList.length;
+    window.location.reload();
+    createInnerHTML();
+  }
+
 const dateString = (date) => {
     let startDate= new Date(date);
     return startDate.toLocaleDateString();
 };
 
 let site_properties = {
-    home_page: "../pages/homePage.html",
-    add_emp__page: "../pages/employeeDataInput.html"
+    HomePage: "../pages/homePage.html",
+    AddEmployee: "../pages/employeeDataInput.html"
 };
